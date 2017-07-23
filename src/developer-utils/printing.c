@@ -4,9 +4,6 @@
 #include <limits.h>
 
 
-void print_binary(unsigned char value);
-void print_hex(unsigned char value);
-
 void binary_representation(unsigned char value);
 
 void print_matrix(unsigned int rows_count, unsigned int columns_count, unsigned char matrix[rows_count][columns_count], output_format format) {
