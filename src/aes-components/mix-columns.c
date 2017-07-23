@@ -17,7 +17,7 @@ const gf8_multiplication gf8_multiplications[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MA
 
 void mix_columns(aes_byte block[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN]) {
     
-    aes_byte result[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN] = {0};
+    aes_byte result[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN];
     
     for (int i = 0; i < AES_BLOCK_MATRIX_SPAN; i++) {
         for (int j = 0; j < AES_BLOCK_MATRIX_SPAN; j++) {
