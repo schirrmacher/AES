@@ -10,7 +10,7 @@
 #define COLUMNS AES_MATRIX_SPAN
 
 int main(int argc, const char * argv[]) {
-    unsigned char values[ROWS][COLUMNS] = {
+    aes_byte values[ROWS][COLUMNS] = {
         { 0x2B, 0x28, 0xAB, 0x09 },
         { 0x7E, 0xBE, 0xF7, 0xCF },
         { 0x15, 0xD2, 0x15, 0x4F },
