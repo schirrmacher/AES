@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "aes-constants.h"
 
-void shift_rows(unsigned char matrix[AES_MATRIX_COLUMNS][AES_MATRIX_ROWS]);
+void shift_rows(unsigned char matrix[AES_MATRIX_SPAN][AES_MATRIX_SPAN]);
 
 #endif /* shift_rows_h */
