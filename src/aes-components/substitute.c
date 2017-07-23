@@ -22,11 +22,11 @@ aes_byte substitutes[256] = {
     0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
 
-void substitute(aes_byte matrix[AES_MATRIX_SPAN][AES_MATRIX_SPAN]) {
-    for (int row_index = 0; row_index < AES_MATRIX_SPAN; row_index++) {
-        for (int column_index = 0; column_index < AES_MATRIX_SPAN; column_index++) {
-            aes_byte current_entry = matrix[row_index][column_index];
-            matrix[row_index][column_index] = substitutes[current_entry];
+void substitute(aes_byte block[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN]) {
+    for (int row_index = 0; row_index < AES_BLOCK_MATRIX_SPAN; row_index++) {
+        for (int column_index = 0; column_index < AES_BLOCK_MATRIX_SPAN; column_index++) {
+            aes_byte current_entry = block[row_index][column_index];
+            block[row_index][column_index] = substitutes[current_entry];
         }
     }
 }

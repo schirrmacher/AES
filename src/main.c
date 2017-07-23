@@ -6,30 +6,30 @@
 #include "./aes-components/shift-rows.h"
 #include "./aes-components/mix-columns.h"
 
-#define ROWS AES_MATRIX_SPAN
-#define COLUMNS AES_MATRIX_SPAN
+#define ROWS AES_BLOCK_MATRIX_SPAN
+#define COLUMNS AES_BLOCK_MATRIX_SPAN
 
 int main(int argc, const char * argv[]) {
-    aes_byte values[ROWS][COLUMNS] = {
+    aes_byte block[ROWS][COLUMNS] = {
         { 0x2B, 0x28, 0xAB, 0x09 },
         { 0x7E, 0xBE, 0xF7, 0xCF },
         { 0x15, 0xD2, 0x15, 0x4F },
         { 0x16, 0xA6, 0x88, 0x3C }
     };
     
-    print_matrix(ROWS, COLUMNS, values, HEX);
+    print_block(ROWS, COLUMNS, block, HEX);
     
     printf("Substitute:");
-    substitute(values);
-    print_matrix(ROWS, COLUMNS, values, HEX);
+    substitute(block);
+    print_block(ROWS, COLUMNS, block, HEX);
     
     printf("Shift:");
-    shift_rows(values);
-    print_matrix(ROWS, COLUMNS, values, HEX);
+    shift_rows(block);
+    print_block(ROWS, COLUMNS, block, HEX);
     
     printf("Mix:");
-    mix_columns(values);
-    print_matrix(ROWS, COLUMNS, values, HEX);
+    mix_columns(block);
+    print_block(ROWS, COLUMNS, block, HEX);
     
     return 0;
 }
