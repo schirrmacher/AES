@@ -10,7 +10,7 @@
 #define COLUMNS AES_BLOCK_MATRIX_SPAN
 
 int main(int argc, const char * argv[]) {
-    aes_byte block[ROWS][COLUMNS] = {
+    uint8_t block[ROWS][COLUMNS] = {
         { 0x2B, 0x28, 0xAB, 0x09 },
         { 0x7E, 0xBE, 0xF7, 0xCF },
         { 0x15, 0xD2, 0x15, 0x4F },

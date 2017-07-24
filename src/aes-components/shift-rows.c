@@ -4,9 +4,9 @@
 #include <limits.h>
 
 
-void shift_rows(aes_byte block[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN]) {
+void shift_rows(uint8_t block[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN]) {
     
-    aes_byte result[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN];
+    uint8_t result[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN];
     
     for (int row_index = 0; row_index < AES_BLOCK_MATRIX_SPAN; row_index++) {
         for (int column_index = 0; column_index < AES_BLOCK_MATRIX_SPAN; column_index++) {
@@ -28,7 +28,7 @@ void shift_rows(aes_byte block[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN]) {
                     shifted_column_index = (column_index + 1) % AES_BLOCK_MATRIX_SPAN;
                     break;
             }
-            const aes_byte current_entry = block[row_index][column_index];
+            const uint8_t current_entry = block[row_index][column_index];
             result[row_index][shifted_column_index] = current_entry;
         }
     }
