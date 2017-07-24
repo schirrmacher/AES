@@ -9,10 +9,10 @@ uint8_t multiply_by_3(uint8_t value);
 
 typedef uint8_t (*gf8_multiplication)(uint8_t);
 const gf8_multiplication gf8_multiplications[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN] = {
-    { multiply_by_2, multiply_by_3, multiply_by_1, multiply_by_1 },
-    { multiply_by_1, multiply_by_2, multiply_by_3, multiply_by_1 },
-    { multiply_by_1, multiply_by_1, multiply_by_2, multiply_by_3 },
-    { multiply_by_3, multiply_by_1, multiply_by_1, multiply_by_2 }
+    multiply_by_2, multiply_by_3, multiply_by_1, multiply_by_1,
+    multiply_by_1, multiply_by_2, multiply_by_3, multiply_by_1,
+    multiply_by_1, multiply_by_1, multiply_by_2, multiply_by_3,
+    multiply_by_3, multiply_by_1, multiply_by_1, multiply_by_2
 };
 
 void mix_columns(uint8_t block[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN]) {
