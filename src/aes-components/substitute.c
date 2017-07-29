@@ -22,9 +22,9 @@ uint8_t substitutes[256] = {
     0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
 
-void substitute(uint8_t block[AES_BLOCK_MATRIX_SPAN][AES_BLOCK_MATRIX_SPAN]) {
-    for (int row_index = 0; row_index < AES_BLOCK_MATRIX_SPAN; row_index++) {
-        for (int column_index = 0; column_index < AES_BLOCK_MATRIX_SPAN; column_index++) {
+void substitute(uint8_t block[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN]) {
+    for (int row_index = 0; row_index < AES_STATE_MATRIX_SPAN; row_index++) {
+        for (int column_index = 0; column_index < AES_STATE_MATRIX_SPAN; column_index++) {
             uint8_t current_entry = block[row_index][column_index];
             block[row_index][column_index] = substitutes[current_entry];
         }

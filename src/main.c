@@ -6,8 +6,8 @@
 #include "./aes-components/shift-rows.h"
 #include "./aes-components/mix-columns.h"
 
-#define ROWS AES_BLOCK_MATRIX_SPAN
-#define COLUMNS AES_BLOCK_MATRIX_SPAN
+#define ROWS AES_STATE_MATRIX_SPAN
+#define COLUMNS AES_STATE_MATRIX_SPAN
 
 int main(int argc, const char * argv[]) {
     uint8_t block[ROWS][COLUMNS] = {
