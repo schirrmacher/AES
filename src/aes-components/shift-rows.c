@@ -33,8 +33,6 @@ void shift_rows(uint8_t block[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN]) {
         }
     }
     
-    for(int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        memcpy(&block[i], &result[i], sizeof(result[0]));
-    }
+    memcpy(block, result, sizeof(result[0]) * AES_STATE_MATRIX_SPAN);
     
 }
