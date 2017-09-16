@@ -6,6 +6,7 @@
 #include "./aes-components/shift-rows.h"
 #include "./aes-components/mix-columns.h"
 #include "./aes-components/key-schedule/g-function.h"
+#include "key-schedule.h"
 
 #define ROWS AES_STATE_MATRIX_SPAN
 #define COLUMNS AES_STATE_MATRIX_SPAN
@@ -32,10 +33,24 @@ int main(int argc, const char * argv[]) {
     mix_columns(block);
     print_block(ROWS, COLUMNS, block, HEX);
     
-    uint8_t test[4] = {
-        0x00, 0x00, 0x00, 0x01
-    };
-    g(test);
+    // KEY SCHEDULE
+    
+    uint32_t key[4] = { 0x00000008, 0x00000004, 0x00000002, 0x00000001 };
+    uint32_t round_key[4];
+    
+    get_round_key(key, round_key);
+    for (int i = 0; i < 4; i++) {
+        print_hex_uint32(round_key[i]);
+        printf("\n");
+    }
+    
+    printf("\n");
+    
+    get_round_key(key, round_key);
+    for (int i = 0; i < 4; i++) {
+        print_hex_uint32(round_key[i]);
+        printf("\n");
+    }
     
     return 0;
 }
