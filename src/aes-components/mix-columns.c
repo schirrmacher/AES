@@ -3,50 +3,60 @@
 #include <string.h>
 
 
-uint8_t multiply_by_1(uint8_t value);
-uint8_t multiply_by_2(uint8_t value);
-uint8_t multiply_by_3(uint8_t value);
+static uint8_t multiply_by_1(uint8_t value);
+static uint8_t multiply_by_2(uint8_t value);
+static uint8_t multiply_by_3(uint8_t value);
 
 typedef uint8_t (*gf8_multiplication)(uint8_t);
-const gf8_multiplication gf8_multiplications[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN] = {
+
+static const gf8_multiplication gf8_multiplications[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN] = {
     multiply_by_2, multiply_by_3, multiply_by_1, multiply_by_1,
     multiply_by_1, multiply_by_2, multiply_by_3, multiply_by_1,
     multiply_by_1, multiply_by_1, multiply_by_2, multiply_by_3,
     multiply_by_3, multiply_by_1, multiply_by_1, multiply_by_2
 };
 
-void mix_columns(uint8_t block[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN]) {
+void mix_columns(uint32_t block[AES_STATE_MATRIX_SPAN]) {
     
     uint8_t result[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN];
     
+    uint8_t bytes[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN];
+    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
+        bytes[i][3] = (block[i] >> 24) & 0xFF;
+        bytes[i][2] = (block[i] >> 16) & 0xFF;
+        bytes[i][1] = (block[i] >>  8) & 0xFF;
+        bytes[i][0] =  block[i]        & 0xFF;
+    }
+    
     for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
         for (int j = 0; j < AES_STATE_MATRIX_SPAN; j++) {
-            uint8_t temp = 0;
+            
+            uint8_t result_value = 0;
+            
             for (int k = 0; k < AES_STATE_MATRIX_SPAN; k++) {
-                const gf8_multiplication multiply = gf8_multiplications[j][k];
-                const uint8_t multiplier = block[k][i];
-                temp ^= multiply(multiplier);
+                const gf8_multiplication multiply_operation = gf8_multiplications[j][k];
+                const uint8_t multiplier = bytes[k][i];
+                result_value ^= multiply_operation(multiplier);
             }
-            result[j][i] = temp;
+            
+            result[j][i] = result_value;
         }
     }
     
-    for(int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        memcpy(&block[i], &result[i], sizeof(result[0]));
-    }
+    memcpy(block, result, sizeof(uint8_t) * AES_STATE_MATRIX_SPAN * AES_STATE_MATRIX_SPAN);
 }
 
-uint8_t multiply_by_1(uint8_t value) {
+static uint8_t multiply_by_1(uint8_t value) {
     return value;
 }
 
-uint8_t multiply_by_2(uint8_t value) {
+static uint8_t multiply_by_2(uint8_t value) {
     if (value < 0b10000000) {
         return value << 1;
     }
     return (value << 1) ^ AES_IRREDUCIBLE_POLYNOMIAL;
 }
 
-uint8_t multiply_by_3(uint8_t value) {
+static uint8_t multiply_by_3(uint8_t value) {
     return multiply_by_2(value) ^ value;
 }

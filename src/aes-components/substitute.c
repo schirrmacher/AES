@@ -1,6 +1,7 @@
 
 #include "substitute.h"
 
+
 uint8_t substitutes[256] = {
     0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
     0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
@@ -20,11 +21,17 @@ uint8_t substitutes[256] = {
     0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
 
-void substitute(uint8_t block[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN]) {
-    for (int row_index = 0; row_index < AES_STATE_MATRIX_SPAN; row_index++) {
-        for (int column_index = 0; column_index < AES_STATE_MATRIX_SPAN; column_index++) {
-            uint8_t current_entry = block[row_index][column_index];
-            block[row_index][column_index] = substitutes[current_entry];
-        }
+void substitute(uint32_t block[AES_STATE_MATRIX_SPAN]) {
+    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
+        uint8_t bytes[4];
+        bytes[0] = substitutes[(block[i] >> 24) & 0xFF];
+        bytes[1] = substitutes[(block[i] >> 16) & 0xFF];
+        bytes[2] = substitutes[(block[i] >>  8) & 0xFF];
+        bytes[3] = substitutes[ block[i]        & 0xFF];
+        block[i] =
+            bytes[0] << 24 |
+            bytes[1] << 16 |
+            bytes[2] <<  8 |
+            bytes[3];
     }
 }
