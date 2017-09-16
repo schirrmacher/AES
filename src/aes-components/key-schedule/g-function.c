@@ -1,7 +1,16 @@
 
-#include "substitute.h"
+#include <string.h>
+#include <limits.h>
 
-uint8_t substitutes[256] = {
+#include "g-function.h"
+#include "../aes-constants.h"
+
+#include "../../developer-utils/printing.h"
+
+static void rotate_bytes_left_by_one(uint8_t* word);
+static uint round_constant(void);
+
+static uint8_t substitutes[256] = {
     0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
     0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
     0xB7, 0xFD, 0x93, 0x26, 0x36, 0x3F, 0xF7, 0xCC, 0x34, 0xA5, 0xE5, 0xF1, 0x71, 0xD8, 0x31, 0x15,
@@ -20,11 +29,43 @@ uint8_t substitutes[256] = {
     0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
 
-void substitute(uint8_t block[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN]) {
-    for (int row_index = 0; row_index < AES_STATE_MATRIX_SPAN; row_index++) {
-        for (int column_index = 0; column_index < AES_STATE_MATRIX_SPAN; column_index++) {
-            uint8_t current_entry = block[row_index][column_index];
-            block[row_index][column_index] = substitutes[current_entry];
+uint32_t g(uint32_t word) {
+    
+    uint8_t word_bytes[4];
+    word_bytes[0] = (word >> 24) & 0xFF;
+    word_bytes[1] = (word >> 16) & 0xFF;
+    word_bytes[2] = (word >> 8) & 0xFF;
+    word_bytes[3] = word & 0xFF;
+    
+    rotate_bytes_left_by_one(word_bytes);
+    
+    for(int i = 0; i < 4; i++) {
+        word_bytes[i] = substitutes[word_bytes[i]];
+    }
+    
+    word_bytes[0] ^= round_constant();
+    
+    return word_bytes[0] << 24 | word_bytes[1] << 16 | word_bytes[2] << 8 | word_bytes[3];
+}
+
+static void rotate_bytes_left_by_one(uint8_t* word) {
+    uint8_t result[AES_STATE_MATRIX_SPAN];
+    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
+        int targetIndex = (i + 3) % AES_STATE_MATRIX_SPAN;
+        result[targetIndex] = word[i];
+    }
+    memcpy(word, result, sizeof(uint8_t) * AES_STATE_MATRIX_SPAN);
+}
+
+static uint round_constant() {
+    static int round = 0;
+    uint result = 1;
+    for (int i = 0; i < round; i++) {
+        result <<= 1;
+        if (0xFF < result) {
+            result ^= AES_IRREDUCIBLE_POLYNOMIAL;
         }
     }
+    round++;
+    return result;
 }

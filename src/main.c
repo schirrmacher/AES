@@ -5,6 +5,7 @@
 #include "./aes-components/substitute.h"
 #include "./aes-components/shift-rows.h"
 #include "./aes-components/mix-columns.h"
+#include "./aes-components/key-schedule/g-function.h"
 
 #define ROWS AES_STATE_MATRIX_SPAN
 #define COLUMNS AES_STATE_MATRIX_SPAN
@@ -30,6 +31,11 @@ int main(int argc, const char * argv[]) {
     printf("Mix:");
     mix_columns(block);
     print_block(ROWS, COLUMNS, block, HEX);
+    
+    uint8_t test[4] = {
+        0x00, 0x00, 0x00, 0x01
+    };
+    g(test);
     
     return 0;
 }
