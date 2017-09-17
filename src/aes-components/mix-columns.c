@@ -16,16 +16,16 @@ static const gf8_multiplication gf8_multiplications[AES_STATE_MATRIX_SPAN][AES_S
     multiply_by_3, multiply_by_1, multiply_by_1, multiply_by_2
 };
 
-void mix_columns(uint32_t block[AES_STATE_MATRIX_SPAN]) {
+void mix_columns(uint32_t state[AES_STATE_MATRIX_SPAN]) {
     
     uint8_t result[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN];
     
     uint8_t bytes[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN];
     for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        bytes[i][3] = (block[i] >> 24) & 0xFF;
-        bytes[i][2] = (block[i] >> 16) & 0xFF;
-        bytes[i][1] = (block[i] >>  8) & 0xFF;
-        bytes[i][0] =  block[i]        & 0xFF;
+        bytes[i][3] = (state[i] >> 24) & 0xFF;
+        bytes[i][2] = (state[i] >> 16) & 0xFF;
+        bytes[i][1] = (state[i] >>  8) & 0xFF;
+        bytes[i][0] =  state[i]        & 0xFF;
     }
     
     for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
@@ -43,7 +43,7 @@ void mix_columns(uint32_t block[AES_STATE_MATRIX_SPAN]) {
         }
     }
     
-    memcpy(block, result, sizeof(uint8_t) * AES_STATE_MATRIX_SPAN * AES_STATE_MATRIX_SPAN);
+    memcpy(state, result, sizeof(uint8_t) * AES_STATE_MATRIX_SPAN * AES_STATE_MATRIX_SPAN);
 }
 
 static uint8_t multiply_by_1(uint8_t value) {

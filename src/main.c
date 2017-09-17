@@ -9,10 +9,28 @@
 
 int main(int argc, const char * argv[]) {
     
-    uint32_t plaintext[4] = { 0x2B28AB09, 0x7EBEF7CF, 0x15D2154F, 0x16A6883C };
-    uint32_t key[4] = { 0x00000008, 0x00000004, 0x00000002, 0x00000001 };
+    uint32_t key[4] = {
+        0x2b7e1516, 0x28aed2a6, 0xabf71588, 0x09cf4f3c
+    };
     
+    uint32_t state[4] = {
+        0x6bc1bee2, 0x2e409f96, 0xe93d7e11, 0x7393172a
+    };
     
+    add_round_key(state, key);
+    
+    for (int i = 1; i <= 9; i++) {
+        substitute(state);
+        shift_rows(state);
+        mix_columns(state);
+        add_round_key(state, key);
+    }
+    
+    substitute(state);
+    shift_rows(state);
+    add_round_key(state, key);
+    
+    print_state(state, HEX);
     
     return 0;
 }

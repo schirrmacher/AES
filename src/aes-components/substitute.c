@@ -21,14 +21,14 @@ uint8_t substitutes[256] = {
     0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
 
-void substitute(uint32_t block[AES_STATE_MATRIX_SPAN]) {
+void substitute(uint32_t state[AES_STATE_MATRIX_SPAN]) {
     for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
         uint8_t bytes[4];
-        bytes[0] = substitutes[(block[i] >> 24) & 0xFF];
-        bytes[1] = substitutes[(block[i] >> 16) & 0xFF];
-        bytes[2] = substitutes[(block[i] >>  8) & 0xFF];
-        bytes[3] = substitutes[ block[i]        & 0xFF];
-        block[i] =
+        bytes[0] = substitutes[(state[i] >> 24) & 0xFF];
+        bytes[1] = substitutes[(state[i] >> 16) & 0xFF];
+        bytes[2] = substitutes[(state[i] >>  8) & 0xFF];
+        bytes[3] = substitutes[ state[i]        & 0xFF];
+        state[i] =
             bytes[0] << 24 |
             bytes[1] << 16 |
             bytes[2] <<  8 |

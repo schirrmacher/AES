@@ -4,10 +4,10 @@
 #include <limits.h>
 
 
-void print_block(uint32_t block[4], output_format format) {
+void print_state(uint32_t state[4], output_format format) {
     printf("\n");
     for (int i = 0; i < 4; i++) {
-        const uint32_t current_value = block[i];
+        const uint32_t current_value = state[i];
         switch (format) {
             case BINARY:
                 print_binary_uint32(current_value);
