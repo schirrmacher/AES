@@ -1,14 +1,13 @@
 
 #include <string.h>
 #include <limits.h>
-
 #include "g-function.h"
 #include "../aes-constants.h"
-#include "substitute.h"
+#include "../substitute.h"
 
 
 static void rotate_bytes_left_by_one(uint8_t* word);
-static uint round_constant(void);
+static int round_constant(void);
 
 uint32_t g(uint32_t word) {
     
@@ -38,9 +37,9 @@ static void rotate_bytes_left_by_one(uint8_t* word) {
     memcpy(word, result, sizeof(uint8_t) * AES_STATE_MATRIX_SPAN);
 }
 
-static uint round_constant() {
+static int round_constant() {
     static int round = 0;
-    uint result = 1;
+    int result = 1;
     for (int i = 0; i < round; i++) {
         result <<= 1;
         if (0xFF < result) {

@@ -3,6 +3,7 @@
 #define g_function_h
 
 #include <stdio.h>
+#include <stdint.h>
 
 uint32_t g(uint32_t word);
 

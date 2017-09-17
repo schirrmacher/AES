@@ -3,6 +3,7 @@
 #define substitute_h
 
 #include <stdio.h>
+#include <stdint.h>
 #include "aes-constants.h"
 
 extern uint8_t substitutes[256];

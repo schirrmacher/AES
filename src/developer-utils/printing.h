@@ -3,6 +3,7 @@
 #define printing_h
 
 #include <stdio.h>
+#include <stdint.h>
 
 typedef enum { BINARY, HEX } output_format;
 
