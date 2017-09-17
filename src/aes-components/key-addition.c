@@ -32,5 +32,4 @@ void add_round_key(uint32_t state[AES_STATE_MATRIX_SPAN], uint32_t key[AES_STATE
     }
     
     memcpy(state, round_key_bytes, sizeof(uint32_t) * AES_KEY_WORDS);
-    
 }
