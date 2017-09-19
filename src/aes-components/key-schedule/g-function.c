@@ -4,8 +4,6 @@
 #include "g-function.h"
 #include "../substitute.h"
 
-#include "printing.h"
-
 
 static void rotate_bytes_left_by_one(uint8_t* word);
 static int round_constant(void);
