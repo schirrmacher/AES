@@ -2,30 +2,20 @@
 #include <string.h>
 #include <limits.h>
 #include "g-function.h"
-#include "../aes-constants.h"
 #include "../substitute.h"
+
+#include "printing.h"
 
 
 static void rotate_bytes_left_by_one(uint8_t* word);
 static int round_constant(void);
 
-uint32_t g(uint32_t word) {
-    
-    uint8_t word_bytes[4];
-    word_bytes[0] = (word >> 24) & 0xFF;
-    word_bytes[1] = (word >> 16) & 0xFF;
-    word_bytes[2] = (word >> 8) & 0xFF;
-    word_bytes[3] = word & 0xFF;
-    
-    rotate_bytes_left_by_one(word_bytes);
-    
-    for(int i = 0; i < 4; i++) {
-        word_bytes[i] = substitutes[word_bytes[i]];
+void g(uint8_t word[AES_WORD_BYTES]) {
+    rotate_bytes_left_by_one(word);
+    for(int i = 0; i < AES_WORD_BYTES; i++) {
+        word[i] = substitutes[word[i]];
     }
-    
-    word_bytes[0] ^= round_constant();
-    
-    return word_bytes[0] << 24 | word_bytes[1] << 16 | word_bytes[2] << 8 | word_bytes[3];
+    word[0] ^= round_constant();
 }
 
 static void rotate_bytes_left_by_one(uint8_t* word) {

@@ -6,6 +6,6 @@
 #include <stdint.h>
 #include "aes-constants.h"
 
-void shift_rows(uint32_t state[AES_STATE_MATRIX_SPAN]);
+void shift_rows(uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]);
 
 #endif /* shift_rows_h */

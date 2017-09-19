@@ -16,17 +16,9 @@ static const gf8_multiplication gf8_multiplications[AES_STATE_MATRIX_SPAN][AES_S
     multiply_by_3, multiply_by_1, multiply_by_1, multiply_by_2
 };
 
-void mix_columns(uint32_t state[AES_STATE_MATRIX_SPAN]) {
+void mix_columns(uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]) {
     
     uint8_t result[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN];
-    
-    uint8_t bytes[AES_STATE_MATRIX_SPAN][AES_STATE_MATRIX_SPAN];
-    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        bytes[i][3] = (state[i] >> 24) & 0xFF;
-        bytes[i][2] = (state[i] >> 16) & 0xFF;
-        bytes[i][1] = (state[i] >>  8) & 0xFF;
-        bytes[i][0] =  state[i]        & 0xFF;
-    }
     
     for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
         for (int j = 0; j < AES_STATE_MATRIX_SPAN; j++) {
@@ -35,7 +27,7 @@ void mix_columns(uint32_t state[AES_STATE_MATRIX_SPAN]) {
             
             for (int k = 0; k < AES_STATE_MATRIX_SPAN; k++) {
                 const gf8_multiplication multiply_operation = gf8_multiplications[j][k];
-                const uint8_t multiplier = bytes[k][i];
+                const uint8_t multiplier = state[k][i];
                 result_value ^= multiply_operation(multiplier);
             }
             

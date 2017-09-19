@@ -8,6 +8,6 @@
 
 extern uint8_t substitutes[256];
 
-void substitute(uint32_t state[AES_STATE_MATRIX_SPAN]);
+void substitute(uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]);
 
 #endif /* substitute_h */

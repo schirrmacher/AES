@@ -4,7 +4,8 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "../aes-constants.h"
 
-uint32_t g(uint32_t word);
+void g(uint8_t word[AES_WORD_BYTES]);
 
 #endif /* g_function_h */

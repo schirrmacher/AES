@@ -6,6 +6,6 @@
 #include <stdint.h>
 #include "aes-constants.h"
 
-void mix_columns(uint32_t state[AES_STATE_MATRIX_SPAN]);
+void mix_columns(uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]);
 
 #endif /* mix_columns_h */
