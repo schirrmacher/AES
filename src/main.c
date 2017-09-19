@@ -1,7 +1,7 @@
 
 #include <assert.h>
-#include "aes.h"
-#include "printing.h"
+#include "./aes-components/aes.h"
+#include "./developer-utils/printing.h"
 
 
 int main(int argc, const char * argv[]) {
