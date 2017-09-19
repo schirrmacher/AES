@@ -1,7 +1,6 @@
 
 #include "key-addition.h"
 #include "./key-schedule/key-schedule.h"
-#include "./util/util.h"
 #include <string.h>
 
 

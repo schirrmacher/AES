@@ -1,7 +1,6 @@
 
 #include <stdio.h>
 #include "./developer-utils/printing.h"
-#include "./aes-components/util/util.h"
 #include "./aes-components/aes-constants.h"
 #include "./aes-components/substitute.h"
 #include "./aes-components/shift-rows.h"
@@ -37,7 +36,6 @@ int main(int argc, const char * argv[]) {
         state[2][i] = (plaintext[i] >>  8) & 0xFF;
         state[3][i] =  plaintext[i]        & 0xFF;
     }
-    print_state(state);
     
     add_round_key(state, key);
     
@@ -63,6 +61,8 @@ int main(int argc, const char * argv[]) {
         expected[2][i] = (result[i] >>  8) & 0xFF;
         expected[3][i] =  result[i]        & 0xFF;
     }
+    
+    print_state(state);
     
     for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
         for (int j = 0; j < AES_STATE_MATRIX_SPAN; j++) {
