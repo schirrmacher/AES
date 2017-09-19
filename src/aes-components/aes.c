@@ -8,23 +8,15 @@
 #include "./key-addition.h"
 
 
+static void transform_to_matrix(uint32_t plaintext[AES_KEY_WORDS], uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]);
+
 void aes_encrypt(uint32_t plaintext[AES_KEY_WORDS], uint32_t input_key[AES_KEY_WORDS], uint8_t result[AES_KEY_WORDS][AES_WORD_BYTES]) {
     
     uint8_t key[4][4];
-    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        key[0][i] = (input_key[i] >> 24) & 0xFF;
-        key[1][i] = (input_key[i] >> 16) & 0xFF;
-        key[2][i] = (input_key[i] >>  8) & 0xFF;
-        key[3][i] =  input_key[i]        & 0xFF;
-    }
+    transform_to_matrix(input_key, key);
     
     uint8_t state[4][4];
-    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        state[0][i] = (plaintext[i] >> 24) & 0xFF;
-        state[1][i] = (plaintext[i] >> 16) & 0xFF;
-        state[2][i] = (plaintext[i] >>  8) & 0xFF;
-        state[3][i] =  plaintext[i]        & 0xFF;
-    }
+    transform_to_matrix(plaintext, state);
     
     add_round_key(state, key);
     
@@ -43,3 +35,11 @@ void aes_encrypt(uint32_t plaintext[AES_KEY_WORDS], uint32_t input_key[AES_KEY_W
     
 }
 
+static void transform_to_matrix(uint32_t input[AES_KEY_WORDS], uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]) {
+    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
+        state[0][i] = (input[i] >> 24) & 0xFF;
+        state[1][i] = (input[i] >> 16) & 0xFF;
+        state[2][i] = (input[i] >>  8) & 0xFF;
+        state[3][i] =  input[i]        & 0xFF;
+    }
+}
