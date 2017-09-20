@@ -3,9 +3,8 @@
 #define mix_columns_h
 
 #include <stdio.h>
-#include <stdint.h>
 #include "aes-constants.h"
 
-void mix_columns(uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]);
+void mix_columns(byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
 
 #endif /* mix_columns_h */

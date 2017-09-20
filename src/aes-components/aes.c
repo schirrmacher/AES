@@ -8,38 +8,36 @@
 #include "./key-addition.h"
 
 
-static void transform_to_matrix(uint32_t plaintext[AES_KEY_WORDS], uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]);
+static void create_state_matrix(word input[AES_128_KEY_WORDS], byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
 
-void aes_encrypt(uint32_t plaintext[AES_KEY_WORDS], uint32_t input_key[AES_KEY_WORDS], uint8_t result[AES_KEY_WORDS][AES_WORD_BYTES]) {
+void aes_encrypt(word plaintext[AES_PLAINTEXT_WORDS], word input_key[AES_128_KEY_WORDS], byte result[AES_STATE_SPAN][AES_STATE_SPAN]) {
     
-    uint8_t key[4][4];
-    transform_to_matrix(input_key, key);
+    byte state[4][4];
+    create_state_matrix(plaintext, state);
     
-    uint8_t state[4][4];
-    transform_to_matrix(plaintext, state);
+    add_round_key(input_key, state);
     
-    add_round_key(state, key);
     
-    for (int i = 1; i <= 9; i++) {
+    for (int i = 1; i < AES_128_ROUNDS; i++) {
         substitute(state);
         shift_rows(state);
         mix_columns(state);
-        add_round_key(state, key);
+        add_round_key(input_key, state);
     }
     
     substitute(state);
     shift_rows(state);
-    add_round_key(state, key);
+    add_round_key(input_key, state);
     
-    memcpy(result, state, sizeof(uint8_t) * AES_KEY_WORDS * AES_WORD_BYTES);
+    memcpy(result, state, sizeof(byte) * AES_STATE_SPAN * AES_STATE_SPAN);
     
 }
 
-static void transform_to_matrix(uint32_t input[AES_KEY_WORDS], uint8_t state[AES_KEY_WORDS][AES_WORD_BYTES]) {
-    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        state[0][i] = (input[i] >> 24) & 0xFF;
-        state[1][i] = (input[i] >> 16) & 0xFF;
-        state[2][i] = (input[i] >>  8) & 0xFF;
-        state[3][i] =  input[i]        & 0xFF;
+static void create_state_matrix(word plaintext[AES_128_KEY_WORDS], byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
+    for (int i = 0; i < AES_STATE_SPAN; i++) {
+        state[0][i] = (plaintext[i] >> 24) & 0xFF;
+        state[1][i] = (plaintext[i] >> 16) & 0xFF;
+        state[2][i] = (plaintext[i] >>  8) & 0xFF;
+        state[3][i] =  plaintext[i]        & 0xFF;
     }
 }

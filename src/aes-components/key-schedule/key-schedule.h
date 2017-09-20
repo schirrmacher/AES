@@ -3,9 +3,8 @@
 #define key_schedule_h
 
 #include <stdio.h>
-#include <stdint.h>
 #include "../aes-constants.h"
 
-void get_round_key(uint8_t key[AES_KEY_WORDS][AES_WORD_BYTES], uint8_t round_key[AES_KEY_WORDS][AES_WORD_BYTES]);
+void get_round_key(word input_key[AES_128_KEY_WORDS], byte round_key[AES_STATE_SPAN][AES_STATE_SPAN]);
 
 #endif /* key_schedule_h */

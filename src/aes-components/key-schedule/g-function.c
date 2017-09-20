@@ -5,10 +5,10 @@
 #include "../substitute.h"
 
 
-static void rotate_bytes_left_by_one(uint8_t* word);
+static void rotate_bytes_left_by_one(byte word[AES_WORD_BYTES]);
 static int round_constant(void);
 
-void g(uint8_t word[AES_WORD_BYTES]) {
+void g(byte word[AES_WORD_BYTES]) {
     rotate_bytes_left_by_one(word);
     for(int i = 0; i < AES_WORD_BYTES; i++) {
         word[i] = substitutes[word[i]];
@@ -16,13 +16,13 @@ void g(uint8_t word[AES_WORD_BYTES]) {
     word[0] ^= round_constant();
 }
 
-static void rotate_bytes_left_by_one(uint8_t* word) {
-    uint8_t result[AES_STATE_MATRIX_SPAN];
-    for (int i = 0; i < AES_STATE_MATRIX_SPAN; i++) {
-        int targetIndex = (i + 3) % AES_STATE_MATRIX_SPAN;
+static void rotate_bytes_left_by_one(byte word[AES_WORD_BYTES]) {
+    byte result[AES_STATE_SPAN];
+    for (int i = 0; i < AES_STATE_SPAN; i++) {
+        int targetIndex = (i + 3) % AES_STATE_SPAN;
         result[targetIndex] = word[i];
     }
-    memcpy(word, result, sizeof(uint8_t) * AES_STATE_MATRIX_SPAN);
+    memcpy(word, result, sizeof(byte) * AES_WORD_BYTES);
 }
 
 static int round_constant() {

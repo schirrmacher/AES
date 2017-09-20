@@ -3,9 +3,8 @@
 #define aes_h
 
 #include <stdio.h>
-#include <stdint.h>
 #include "aes-constants.h"
 
-void aes_encrypt(uint32_t plaintext[AES_KEY_WORDS], uint32_t input_key[AES_KEY_WORDS], uint8_t result[AES_KEY_WORDS][AES_WORD_BYTES]);
+void aes_encrypt(word plaintext[AES_PLAINTEXT_WORDS], word input_key[AES_128_KEY_WORDS], byte result[AES_STATE_SPAN][AES_STATE_SPAN]);
 
 #endif /* aes_h */
