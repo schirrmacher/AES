@@ -3,46 +3,49 @@
 #include "./aes-components/aes.h"
 
 
-static void print_state(byte state[4][4]);
-static void print_hex_uint8(byte value);
+static void print_state(byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
 
 int main(int argc, const char * argv[]) {
     
-    word key[4] = {
-        0x2b7e1516, 0x28aed2a6, 0xabf71588, 0x09cf4f3c
+    word key[AES_256_KEY_WORDS] = {
+        0x603deb10, 0x15ca71be, 0x2b73aef0, 0x857d7781, 0x1f352c07, 0x3b6108d7, 0x2d9810a3, 0x0914dff4
     };
     
-    word plaintext[4] = {
-        0x6bc1bee2, 0x2e409f96, 0xe93d7e11, 0x7393172a
-        //0x3243f6a8, 0x885a308d, 0x313198a2, 0xe0370734
+    word plaintext[AES_PLAINTEXT_WORDS] = {
+        0xae2d8a57, 0x1e03ac9c, 0x9eb76fac, 0x45af8e51
     };
     
-    word expected[4] = {
-        0x3ad77bb4, 0x0d7a3660, 0xa89ecaf3, 0x2466ef97
+    word expected[AES_CIPHERTEXT_WORDS] = {
+        0x591ccb10, 0xd410ed26, 0xdc5ba74a, 0x31362870
     };
     
-    byte result[4][4];
-    aes_encrypt(plaintext, key, result);
+    byte result[AES_STATE_SPAN][AES_STATE_SPAN];
+    aes_256_encrypt_block(plaintext, key, result);
     
-    byte expected_bytes[4][4];
-    for (int i = 0; i < 4; i++) {
+    byte expected_bytes[AES_STATE_SPAN][AES_STATE_SPAN];
+    for (int i = 0; i < AES_CIPHERTEXT_WORDS; i++) {
         expected_bytes[0][i] = (expected[i] >> 24) & 0xFF;
         expected_bytes[1][i] = (expected[i] >> 16) & 0xFF;
         expected_bytes[2][i] = (expected[i] >>  8) & 0xFF;
         expected_bytes[3][i] =  expected[i]        & 0xFF;
     }
     
+    printf("Expected:");
+    print_state(expected_bytes);
+    
+    printf("Actual:");
     print_state(result);
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
+            if (result[i][j] != expected_bytes[i][j]) {
+                printf("❌ Test failed.\n\n");
+            }
             assert(result[i][j] == expected_bytes[i][j]);
         }
     }
     
-    printf("\n\n");
-    printf("✅ Test succeeded!\n");
-    printf("\n\n");
+    printf("✅ Test succeeded!\n\n");
     
     return 0;
 }
@@ -52,13 +55,9 @@ static void print_state(byte state[4][4]) {
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             const byte current_value = state[i][j];
-            print_hex_uint8(current_value);
+            printf("%02hhX ", current_value);
         }
         printf("\n");
     }
     printf("\n");
-}
-
-static void print_hex_uint8(byte value) {
-    printf("%02hhX ", value);
 }

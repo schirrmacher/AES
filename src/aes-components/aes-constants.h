@@ -7,11 +7,13 @@
 typedef uint8_t byte;
 typedef uint32_t word;
 
-#define AES_128_ROUNDS 10
-#define AES_128_KEY_WORDS 4
+#define AES_256_ROUNDS 14
+#define AES_256_KEY_WORDS 8
+#define AES_ROUND_KEY_WORDS 4
 
 #define AES_WORD_BYTES 4
 #define AES_PLAINTEXT_WORDS 4
+#define AES_CIPHERTEXT_WORDS 4
 #define AES_STATE_SPAN 4
 
 #define AES_IRREDUCIBLE_POLYNOMIAL 0x11b
