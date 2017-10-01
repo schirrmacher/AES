@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "../aes-constants.h"
 
-void h(word word);
+void h(word word_ref);
 
 #endif /* h_function_h */

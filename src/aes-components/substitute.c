@@ -21,10 +21,10 @@ byte substitutes[256] = {
     0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
 };
 
-void substitute(state state) {
+void substitute(state state_ref) {
     for (int i = 0; i < AES_STATE_SPAN; i++) {
         for (int j = 0; j < AES_STATE_SPAN; j++) {
-            state[i][j] = substitutes[state[i][j]];
+            state_ref[i][j] = substitutes[state_ref[i][j]];
         }
     }
 }

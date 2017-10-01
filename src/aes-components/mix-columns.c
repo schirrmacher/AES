@@ -16,7 +16,7 @@ static const gf8_multiplication gf8_multiplications[AES_STATE_SPAN][AES_STATE_SP
     multiply_by_3, multiply_by_1, multiply_by_1, multiply_by_2
 };
 
-void mix_columns(state state) {
+void mix_columns(state state_ref) {
     
     byte result[AES_STATE_SPAN][AES_STATE_SPAN];
     
@@ -27,7 +27,7 @@ void mix_columns(state state) {
             
             for (int k = 0; k < AES_STATE_SPAN; k++) {
                 const gf8_multiplication multiply_operation = gf8_multiplications[j][k];
-                const byte multiplier = state[k][i];
+                const byte multiplier = state_ref[k][i];
                 result_value ^= multiply_operation(multiplier);
             }
             
@@ -35,7 +35,7 @@ void mix_columns(state state) {
         }
     }
     
-    memcpy(state, result, sizeof(byte) * AES_STATE_SPAN * AES_STATE_SPAN);
+    memcpy(state_ref, result, sizeof(byte) * AES_STATE_SPAN * AES_STATE_SPAN);
 }
 
 static byte multiply_by_1(byte value) {

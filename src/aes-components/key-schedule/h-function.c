@@ -3,8 +3,8 @@
 #include "../substitute.h"
 
 
-void h(word word) {
+void h(word word_ref) {
     for(int i = 0; i < AES_WORD_BYTES; i++) {
-        word[i] = substitutes[word[i]];
+        word_ref[i] = substitutes[word_ref[i]];
     }
 }

@@ -7,6 +7,6 @@
 
 extern byte substitutes[256];
 
-void substitute(state state);
+void substitute(state state_ref);
 
 #endif /* substitute_h */
