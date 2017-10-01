@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
     };
     
     block result;
-    aes_256_encrypt_block(plaintext, key, result);
+    aes_256_encrypt_block(key, plaintext, result);
     
     printf("Expected:");
     print_block(expected);

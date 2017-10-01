@@ -11,7 +11,7 @@
 static void create_state_matrix(block plaintext, state state);
 static void create_result_from_state(block result_block_ref, state state);
 
-void aes_256_encrypt_block(block plaintext, key input_key, block result_block_ref) {
+void aes_256_encrypt_block(key input_key, block plaintext, block result_block_ref) {
     
     state state;
     create_state_matrix(plaintext, state);
