@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "aes-constants.h"
 
-void add_round_key(word input_key[AES_256_KEY_WORDS], byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
+void add_round_key(key input_key, byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
 
 #endif /* key_addition_h */

@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-void add_round_key(word input_key[AES_256_KEY_WORDS], byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
+void add_round_key(key input_key, byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
     
     byte round_key[AES_STATE_SPAN][AES_STATE_SPAN];
     get_round_key(input_key, round_key);

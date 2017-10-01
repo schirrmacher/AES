@@ -7,15 +7,15 @@ static void print_state(byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
 
 int main(int argc, const char * argv[]) {
     
-    word key[AES_256_KEY_WORDS] = {
+    uint32_t key[AES_256_KEY_WORDS] = {
         0x603deb10, 0x15ca71be, 0x2b73aef0, 0x857d7781, 0x1f352c07, 0x3b6108d7, 0x2d9810a3, 0x0914dff4
     };
     
-    word plaintext[AES_PLAINTEXT_WORDS] = {
+    uint32_t plaintext[AES_PLAINTEXT_WORDS] = {
         0xae2d8a57, 0x1e03ac9c, 0x9eb76fac, 0x45af8e51
     };
     
-    word expected[AES_CIPHERTEXT_WORDS] = {
+    uint32_t expected[AES_CIPHERTEXT_WORDS] = {
         0x591ccb10, 0xd410ed26, 0xdc5ba74a, 0x31362870
     };
     

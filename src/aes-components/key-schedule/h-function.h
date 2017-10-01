@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "../aes-constants.h"
 
-void h(byte word[AES_WORD_BYTES]);
+void h(word word);
 
 #endif /* h_function_h */

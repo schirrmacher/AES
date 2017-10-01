@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "../aes-constants.h"
 
-void get_round_key(word input_key[AES_256_KEY_WORDS], byte round_key[AES_STATE_SPAN][AES_STATE_SPAN]);
+void get_round_key(key input_key, round_key round_key_ref);
 
 #endif /* key_schedule_h */
