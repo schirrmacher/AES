@@ -8,9 +8,10 @@
 #include "./key-addition.h"
 
 
-static void create_state_matrix(uint32_t plaintext[AES_PLAINTEXT_WORDS], byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
+static void create_state_matrix(block plaintext, byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
+static void create_result_from_state(block result_block_ref, byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
 
-void aes_256_encrypt_block(uint32_t plaintext[AES_PLAINTEXT_WORDS], key input_key, byte result[AES_STATE_SPAN][AES_STATE_SPAN]) {
+void aes_256_encrypt_block(block plaintext, key input_key, block result_block_ref) {
     
     byte state[AES_STATE_SPAN][AES_STATE_SPAN];
     create_state_matrix(plaintext, state);
@@ -28,15 +29,21 @@ void aes_256_encrypt_block(uint32_t plaintext[AES_PLAINTEXT_WORDS], key input_ke
     shift_rows(state);
     add_round_key(input_key, state);
     
-    memcpy(result, state, sizeof(byte) * AES_STATE_SPAN * AES_STATE_SPAN);
+    create_result_from_state(result_block_ref, state);
     
 }
 
-static void create_state_matrix(uint32_t plaintext[AES_PLAINTEXT_WORDS], byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
+static void create_state_matrix(block plaintext, byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
     for (int i = 0; i < AES_STATE_SPAN; i++) {
         state[0][i] = (plaintext[i] >> 24) & 0xFF;
         state[1][i] = (plaintext[i] >> 16) & 0xFF;
         state[2][i] = (plaintext[i] >>  8) & 0xFF;
         state[3][i] =  plaintext[i]        & 0xFF;
+    }
+}
+
+static void create_result_from_state(block result_block_ref, byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
+    for (int i = 0; i < AES_STATE_SPAN; i++) {
+        result_block_ref[i] = state[0][i] << 24 | state[1][i] << 16 | state[2][i] << 8 | state[3][i];
     }
 }

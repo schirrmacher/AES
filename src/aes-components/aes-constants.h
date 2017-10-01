@@ -15,6 +15,7 @@
 
 #define AES_IRREDUCIBLE_POLYNOMIAL 0x11b
 
+typedef uint32_t block[4];
 typedef uint8_t byte;
 typedef uint32_t key[AES_256_KEY_WORDS];
 typedef byte round_key[AES_STATE_SPAN][AES_STATE_SPAN];

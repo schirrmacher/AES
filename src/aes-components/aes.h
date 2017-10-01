@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "aes-constants.h"
 
-void aes_256_encrypt_block(uint32_t plaintext[AES_PLAINTEXT_WORDS], key input_key, byte result[AES_STATE_SPAN][AES_STATE_SPAN]);
+void aes_256_encrypt_block(block plaintext, key input_key, block result_block_ref);
 
 #endif /* aes_h */
