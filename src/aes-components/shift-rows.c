@@ -4,7 +4,7 @@
 #include <limits.h>
 
 
-void shift_rows(byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
+void shift_rows(state state) {
     
     byte result[AES_STATE_SPAN][AES_STATE_SPAN];
     

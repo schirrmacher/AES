@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "aes-constants.h"
 
-void shift_rows(byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
+void shift_rows(state state);
 
 #endif /* shift_rows_h */

@@ -7,6 +7,6 @@
 
 extern byte substitutes[256];
 
-void substitute(byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
+void substitute(state state);
 
 #endif /* substitute_h */

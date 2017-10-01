@@ -20,5 +20,6 @@ typedef uint8_t byte;
 typedef uint32_t key[AES_256_KEY_WORDS];
 typedef byte round_key[AES_STATE_SPAN][AES_STATE_SPAN];
 typedef byte word[AES_WORD_BYTES];
+typedef byte state[AES_STATE_SPAN][AES_STATE_SPAN];
 
 #endif /* aes_constants_h */

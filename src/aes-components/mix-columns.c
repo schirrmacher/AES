@@ -16,7 +16,7 @@ static const gf8_multiplication gf8_multiplications[AES_STATE_SPAN][AES_STATE_SP
     multiply_by_3, multiply_by_1, multiply_by_1, multiply_by_2
 };
 
-void mix_columns(byte state[AES_STATE_SPAN][AES_STATE_SPAN]) {
+void mix_columns(state state) {
     
     byte result[AES_STATE_SPAN][AES_STATE_SPAN];
     

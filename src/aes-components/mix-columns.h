@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "aes-constants.h"
 
-void mix_columns(byte state[AES_STATE_SPAN][AES_STATE_SPAN]);
+void mix_columns(state state);
 
 #endif /* mix_columns_h */
