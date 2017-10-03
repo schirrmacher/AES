@@ -7,4 +7,6 @@
 
 void mix_columns(state state_ref);
 
+void d_mix_columns(state state_ref);
+
 #endif /* mix_columns_h */
