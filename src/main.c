@@ -5,6 +5,7 @@
 
 
 static void print_block(block block);
+static void print_state(state state);
 
 int main(int argc, const char * argv[]) {
     
@@ -47,4 +48,15 @@ static void print_block(block block) {
         printf("%08" PRIx32 " ", block[i]);
     }
     printf("\n\n");
+}
+
+static void print_state(state state) {
+    printf("\n");
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            printf("%hhX ", state[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
