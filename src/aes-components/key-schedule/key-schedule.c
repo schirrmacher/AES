@@ -9,7 +9,6 @@ static void compute_round_keys(key input_key, round_key round_keys[AES_256_ROUND
 void get_round_key(key input_key, round_key round_key_ref) {
     
     static int round = 0;
-    
     static round_key round_keys[AES_256_ROUNDS + 1];
     
     if (round == 0) {
@@ -23,6 +22,24 @@ void get_round_key(key input_key, round_key round_key_ref) {
     }
     
     round++;
+}
+
+void d_get_round_key(key input_key, round_key round_key_ref) {
+    
+    static int round = AES_256_ROUNDS;
+    static round_key round_keys[AES_256_ROUNDS + 1];
+    
+    if (round == AES_256_ROUNDS) {
+        compute_round_keys(input_key, round_keys);
+    }
+    
+    for (int i = 0; i < AES_STATE_SPAN; i++) {
+        for (int j = 0; j < AES_STATE_SPAN; j++) {
+            round_key_ref[i][j] = round_keys[round][i][j];
+        }
+    }
+    
+    round--;
 }
 
 static void compute_round_keys(key input_key, round_key round_keys_ref[AES_256_ROUNDS + 1]) {
@@ -67,5 +84,4 @@ static void compute_round_keys(key input_key, round_key round_keys_ref[AES_256_R
             
         }
     }
-    
 }
