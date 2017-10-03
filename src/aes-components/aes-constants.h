@@ -17,7 +17,7 @@ typedef byte word[AES_WORD_BYTES];
 
 #define AES_STATE_SPAN 4
 typedef byte state[AES_STATE_SPAN][AES_STATE_SPAN];
-typedef state round_key;
+typedef byte round_key[AES_STATE_SPAN][AES_STATE_SPAN];
 
 #define AES_IRREDUCIBLE_POLYNOMIAL 0x11b
 
