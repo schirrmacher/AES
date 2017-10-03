@@ -48,7 +48,7 @@ void substitute(state state_ref) {
     }
 }
 
-void d_substitute(state state_ref) {
+void inv_substitute(state state_ref) {
     for (int i = 0; i < AES_STATE_SPAN; i++) {
         for (int j = 0; j < AES_STATE_SPAN; j++) {
             state_ref[i][j] = inv_substitutes[state_ref[i][j]];

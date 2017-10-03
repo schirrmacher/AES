@@ -11,6 +11,6 @@ extern byte inv_substitutes[256];
 
 void substitute(state state_ref);
 
-void d_substitute(state state_ref);
+void inv_substitute(state state_ref);
 
 #endif /* substitute_h */

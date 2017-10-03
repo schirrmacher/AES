@@ -7,6 +7,6 @@
 
 void shift_rows(state state_ref);
 
-void d_shift_rows(state state_ref);
+void inv_shift_rows(state state_ref);
 
 #endif /* shift_rows_h */

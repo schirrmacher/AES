@@ -24,7 +24,7 @@ void get_round_key(key input_key, round_key round_key_ref) {
     round++;
 }
 
-void d_get_round_key(key input_key, round_key round_key_ref) {
+void inv_get_round_key(key input_key, round_key round_key_ref) {
     
     static int round = AES_256_ROUNDS;
     static round_key round_keys[AES_256_ROUNDS + 1];

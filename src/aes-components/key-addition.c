@@ -18,10 +18,10 @@ void add_round_key(key input_key, state state_ref) {
     memcpy(state_ref, round_key_ref, sizeof(byte) * AES_STATE_SPAN * AES_STATE_SPAN);
 }
 
-void d_add_round_key(key input_key, state state_ref) {
+void inv_add_round_key(key input_key, state state_ref) {
     
     round_key round_key_ref;
-    d_get_round_key(input_key, round_key_ref);
+    inv_get_round_key(input_key, round_key_ref);
     
     for (int i = 0; i < AES_STATE_SPAN; i++) {
         for (int j = 0; j < AES_STATE_SPAN; j++) {

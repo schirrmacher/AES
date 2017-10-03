@@ -7,6 +7,6 @@
 
 void get_round_key(key input_key, round_key round_key_ref);
 
-void d_get_round_key(key input_key, round_key round_key_ref);
+void inv_get_round_key(key input_key, round_key round_key_ref);
 
 #endif /* key_schedule_h */

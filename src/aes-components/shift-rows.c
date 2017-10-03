@@ -17,7 +17,7 @@ void shift_rows(state state_ref) {
     memcpy(state_ref, result, sizeof(byte) * AES_STATE_SPAN * AES_STATE_SPAN);
 }
 
-void d_shift_rows(state state_ref) {
+void inv_shift_rows(state state_ref) {
     
     state result;
     
