@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "../aes-constants.h"
 
-void g(word word_ref);
+void g(const int round, word word_ref);
 
 #endif /* g_function_h */

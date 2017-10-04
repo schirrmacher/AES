@@ -3,10 +3,10 @@
 #include "./key-schedule/key-schedule.h"
 
 
-void add_round_key(const key input_key, state state_ref) {
+void add_round_key(const key input_key, const int round, state state_ref) {
     
     round_key round_key;
-    get_round_key(input_key, round_key);
+    get_round_key(input_key, round, round_key);
     
     for (int i = 0; i < AES_STATE_SPAN; i++) {
         for (int j = 0; j < AES_STATE_SPAN; j++) {
@@ -15,10 +15,10 @@ void add_round_key(const key input_key, state state_ref) {
     }
 }
 
-void inv_add_round_key(const key input_key, state state_ref) {
+void inv_add_round_key(const key input_key, const int round, state state_ref) {
     
     round_key round_key;
-    inv_get_round_key(input_key, round_key);
+    inv_get_round_key(input_key, round, round_key);
     
     for (int i = 0; i < AES_STATE_SPAN; i++) {
         for (int j = 0; j < AES_STATE_SPAN; j++) {

@@ -26,13 +26,12 @@ static byte round_constant[256] = {
     0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d
 };
 
-void g(word word_ref) {
-    static int round = 0;
+void g(const int round, word word_ref) {
     rotate_bytes_left_by_one(word_ref);
     for(int i = 0; i < AES_WORD_BYTES; i++) {
         word_ref[i] = substitutes[word_ref[i]];
     }
-    word_ref[0] ^= round_constant[++round];
+    word_ref[0] ^= round_constant[round];
 }
 
 static void rotate_bytes_left_by_one(word word_ref) {

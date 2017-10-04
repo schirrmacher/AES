@@ -23,8 +23,8 @@ int main(int argc, const char * argv[]) {
     
     printf("Encryption Test:");
     block encryption_result;
-    //aes_256_encrypt_block(key, plaintext, encryption_result);
-    //test_equality(ciphertext, encryption_result);
+    aes_256_encrypt_block(key, plaintext, encryption_result);
+    test_equality(ciphertext, encryption_result);
     
     printf("Decryption Test:");
     block decryption_result;
@@ -39,13 +39,16 @@ static void test_equality(block expected, block actual) {
     print_block(expected);
     printf("\n== ");
     print_block(actual);
+    int test_failed = 0;
     for (int i = 0; i < 4; i++) {
         if (actual[i] != expected[i]) {
-            printf("❌\n\n");
+            test_failed = 1;
         }
-        assert(actual[i] == expected[i]);
     }
-    printf("✅\n\n");
+    if (test_failed == 1)
+        printf("❌\n\n");
+    else
+        printf("✅\n\n");
 }
 
 static void print_block(block block) {
