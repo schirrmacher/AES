@@ -3,7 +3,7 @@
 #include "./key-schedule/key-schedule.h"
 
 
-void add_round_key(key input_key, state state_ref) {
+void add_round_key(const key input_key, state state_ref) {
     
     round_key round_key;
     get_round_key(input_key, round_key);
@@ -15,7 +15,7 @@ void add_round_key(key input_key, state state_ref) {
     }
 }
 
-void inv_add_round_key(key input_key, state state_ref) {
+void inv_add_round_key(const key input_key, state state_ref) {
     
     round_key round_key;
     inv_get_round_key(input_key, round_key);

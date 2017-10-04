@@ -4,9 +4,9 @@
 #include "h-function.h"
 
 
-static void compute_round_keys(key input_key, round_key round_keys[AES_256_ROUNDS + 1]);
+static void compute_round_keys(const key input_key, round_key round_keys[AES_256_ROUNDS + 1]);
 
-void get_round_key(key input_key, round_key round_key_ref) {
+void get_round_key(const key input_key, round_key round_key_ref) {
     
     static int round = 0;
     static round_key round_keys[AES_256_ROUNDS + 1];
@@ -24,7 +24,7 @@ void get_round_key(key input_key, round_key round_key_ref) {
     round++;
 }
 
-void inv_get_round_key(key input_key, round_key round_key_ref) {
+void inv_get_round_key(const key input_key, round_key round_key_ref) {
     
     static int round = AES_256_ROUNDS;
     static round_key round_keys[AES_256_ROUNDS + 1];
@@ -42,7 +42,7 @@ void inv_get_round_key(key input_key, round_key round_key_ref) {
     round--;
 }
 
-static void compute_round_keys(key input_key, round_key round_keys_ref[AES_256_ROUNDS + 1]) {
+static void compute_round_keys(const key input_key, round_key round_keys_ref[AES_256_ROUNDS + 1]) {
     
     for (int round = 0; round < AES_256_ROUNDS + 1; round++) {
         
