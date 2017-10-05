@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
         0x30c81c46, 0xa35ce411, 0xe5fbc119, 0x1a0a52ef,
         0xf69f2445, 0xdf4f9b17, 0xad2b417b, 0xe66c3710
     };
-    aes_256_encrypt(key, encryption_data, 4);
+    aes_256_encrypt(key, encryption_data, 4, ECB);
     test_equality(ciphertext, encryption_data, 4);
     
     printf("Decryption Test:");
@@ -44,7 +44,7 @@ int main(int argc, const char * argv[]) {
         0xb6ed21b9, 0x9ca6f4f9, 0xf153e7b1, 0xbeafed1d,
         0x23304b7a, 0x39f9f3ff, 0x067d8d8f, 0x9e24ecc7
     };
-    aes_256_decrypt(key, decryption_data, 4);
+    aes_256_decrypt(key, decryption_data, 4, ECB);
     test_equality(plaintext, decryption_data, 4);
     
     return 0;

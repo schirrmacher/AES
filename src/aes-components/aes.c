@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "aes.h"
 #include "./aes-constants.h"
 #include "./substitute.h"
 #include "./shift-rows.h"
@@ -14,13 +15,13 @@ static void aes_256_decrypt_block(const key input_key, const block ciphertext, b
 static void create_state_from_block(const block plaintext, state state_ref);
 static void create_block_from_state(const state state, block result_block_ref);
 
-void aes_256_encrypt(const key input_key, block *plaintext, size_t size) {
+void aes_256_encrypt(const key input_key, block *plaintext, size_t size, enum operation_mode mode) {
     for (int i = 0; i < size; i++) {
         aes_256_encrypt_block(input_key, plaintext[i], plaintext[i]);
     }
 }
 
-void aes_256_decrypt(const key input_key, block *ciphertext, size_t size) {
+void aes_256_decrypt(const key input_key, block *ciphertext, size_t size, enum operation_mode mode) {
     for (int i = 0; i < size; i++) {
         aes_256_decrypt_block(input_key, ciphertext[i], ciphertext[i]);
     }
