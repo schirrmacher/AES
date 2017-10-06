@@ -8,6 +8,10 @@
 #include "./mix-columns.h"
 #include "./key-addition.h"
 
+#include <inttypes.h>
+
+
+static void xor_blocks(const block first_block, const block second_block, block xored_block_ref);
 
 static void aes_256_encrypt_block(const key input_key, const block plaintext, block result_block_ref);
 static void aes_256_decrypt_block(const key input_key, const block ciphertext, block result_block_ref);
@@ -16,14 +20,49 @@ static void create_state_from_block(const block plaintext, state state_ref);
 static void create_block_from_state(const state state, block result_block_ref);
 
 void aes_256_encrypt(block *plaintext, size_t plaintext_size, const struct aes_configuration config) {
+    
+    if (config.mode == ECB) {
+        for (int i = 0; i < plaintext_size; i++) {
+            aes_256_encrypt_block(*config.key, plaintext[i], plaintext[i]);
+        }
+        return;
+    }
+    
+    block ciphertext;
+    block prev_ciphertext;
     for (int i = 0; i < plaintext_size; i++) {
-        aes_256_encrypt_block(*config.key, plaintext[i], plaintext[i]);
+        
+        if (i == 0) {
+            xor_blocks(plaintext[i], *config.iv, ciphertext);
+        } else {
+            xor_blocks(plaintext[i], prev_ciphertext, ciphertext);
+        }
+        
+        aes_256_encrypt_block(*config.key, ciphertext, plaintext[i]);
+        memcpy(prev_ciphertext, plaintext[i], sizeof(uint32_t) * 4);
     }
 }
 
 void aes_256_decrypt(block *ciphertext, size_t ciphertext_size, const struct aes_configuration config) {
-    for (int i = 0; i < ciphertext_size; i++) {
-        aes_256_decrypt_block(*config.key, ciphertext[i], ciphertext[i]);
+    
+    switch (config.mode) {
+        case ECB:
+            for (int i = 0; i < ciphertext_size; i++) {
+                aes_256_decrypt_block(*config.key, ciphertext[i], ciphertext[i]);
+            }
+            break;
+            
+        case CBC:
+            
+            
+            
+            break;
+    }
+}
+
+static void xor_blocks(const block first_block, const block second_block, block xored_block_ref) {
+    for (int i = 0; i < 4; i++) {
+        xored_block_ref[i] = first_block[i] ^ second_block[i];
     }
 }
 
