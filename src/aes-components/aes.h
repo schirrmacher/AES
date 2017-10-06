@@ -10,8 +10,14 @@ enum operation_mode {
     CBC
 };
 
-void aes_256_encrypt(const key input_key, block *plaintext, size_t size, enum operation_mode mode);
+struct aes_configuration {
+    const key *key;
+    const enum operation_mode mode;
+    const block *iv;
+};
 
-void aes_256_decrypt(const key input_key, block *ciphertext, size_t size, enum operation_mode mode);
+void aes_256_encrypt(block *plaintext, size_t plaintext_size, const struct aes_configuration config);
+
+void aes_256_decrypt(block *ciphertext, size_t ciphertext_size, const struct aes_configuration config);
 
 #endif /* aes_h */
