@@ -71,7 +71,7 @@ int main(int argc, const char * argv[]) {
     
     printf("CBC Decryption Test:");
     block cbc_decryption_data[4];
-    memcpy(&cbc_decryption_data, &ecb_ciphertext, sizeof(uint32_t) * 4 * 4);
+    memcpy(&cbc_decryption_data, &cbc_ciphertext, sizeof(uint32_t) * 4 * 4);
     aes_256_decrypt(cbc_decryption_data, 4, cbc_config);
     test_equality(plaintext, cbc_decryption_data, 4);
     
