@@ -44,10 +44,12 @@ static void compute_round_keys(const key input_key, round_key round_keys_ref[AES
         
         if (round_key_count == 0 || round_key_count == 1) {
             
+            int key_byte_offset = round_key_count * (AES_256_KEY_BYTES / 2);
+            
             for (int i = 0; i < AES_STATE_SPAN; i++) {
                 for (int j = 0; j < AES_STATE_SPAN; j++) {
-                    // parse left then right half of the input key to fit the matrix format
-                    round_keys_ref[round_key_count][i][j] = (input_key[j + (4 * round_key_count)] >> (3 - i) * 8) & 0xFF;
+                    int key_byte_index = i + (j * AES_STATE_SPAN) + key_byte_offset;
+                    round_keys_ref[round_key_count][i][j] = input_key[key_byte_index];
                 }
             }
             

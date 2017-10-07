@@ -9,8 +9,8 @@ typedef uint8_t byte;
 
 #define AES_256_ROUNDS 14
 
-#define AES_256_KEY_WORDS 8
-typedef uint32_t key[AES_256_KEY_WORDS];
+#define AES_256_KEY_BYTES 32
+typedef byte key[AES_256_KEY_BYTES];
 
 #define AES_WORD_BYTES 4
 typedef byte word[AES_WORD_BYTES];
