@@ -16,8 +16,8 @@ struct aes_configuration {
     const block *iv;
 };
 
-void aes_256_encrypt(block *plaintext, size_t plaintext_size, const struct aes_configuration config);
+void aes_256_encrypt(byte *plaintext, size_t plaintext_size, const struct aes_configuration config);
 
-void aes_256_decrypt(block *ciphertext, size_t ciphertext_size, const struct aes_configuration config);
+void aes_256_decrypt(byte *ciphertext, size_t ciphertext_size, const struct aes_configuration config);
 
 #endif /* aes_h */

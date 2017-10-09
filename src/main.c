@@ -1,11 +1,12 @@
 
 #include "tests.h"
+#include <assert.h>
 
 
 int main(int argc, const char * argv[]) {
     
-    test_cbc_mode();
-    test_ecb_mode();
+    assert(0 == test_cbc_mode());
+    assert(0 == test_ecb_mode());
     
     return 0;
 }

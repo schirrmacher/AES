@@ -58,15 +58,16 @@ void aes_256_decrypt_block(const key input_key, const block ciphertext, block re
 
 static void create_state_from_block(const block block, state state_ref) {
     for (int i = 0; i < AES_STATE_SPAN; i++) {
-        state_ref[0][i] = (block[i] >> 24) & 0xFF;
-        state_ref[1][i] = (block[i] >> 16) & 0xFF;
-        state_ref[2][i] = (block[i] >>  8) & 0xFF;
-        state_ref[3][i] =  block[i]        & 0xFF;
+        for (int j = 0; j < AES_STATE_SPAN; j++) {
+            state_ref[i][j] = block[i + (j * AES_STATE_SPAN)];
+        }
     }
 }
 
 static void create_block_from_state(const state state, block block_ref) {
     for (int i = 0; i < AES_STATE_SPAN; i++) {
-        block_ref[i] = state[0][i] << 24 | state[1][i] << 16 | state[2][i] << 8 | state[3][i];
+        for (int j = 0; j < AES_STATE_SPAN; j++) {
+            block_ref[i + (j * AES_STATE_SPAN)] = state[i][j];
+        }
     }
 }

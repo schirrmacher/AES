@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 
-void test_ecb_mode(void);
+int test_ecb_mode(void);
 
-void test_cbc_mode(void);
+int test_cbc_mode(void);
 
 #endif /* tests_h */
