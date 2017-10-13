@@ -1,9 +1,10 @@
 
 #include "tests.h"
+#include<stdlib.h>
 #include <inttypes.h>
 #include <string.h>
 #include "./aes-components/aes.h"
-
+#include "./padding/pkcs7.h"
 
 static int test_equality(byte *expected, byte *actual, size_t size);
 
@@ -98,6 +99,59 @@ int test_cbc_mode() {
     return failed_tests;
 }
 
+int test_padding() {
+    
+    int failed_tests = 0;
+    
+    byte key[32] = {
+        0x60, 0x3d, 0xeb, 0x10, 0x15, 0xca, 0x71, 0xbe, 0x2b, 0x73, 0xae, 0xf0, 0x85, 0x7d, 0x77, 0x81,
+        0x1f, 0x35, 0x2c, 0x07, 0x3b, 0x61, 0x08, 0xd7, 0x2d, 0x98, 0x10, 0xa3, 0x09, 0x14, 0xdf, 0xf4
+    };
+    
+    struct aes_configuration config = {
+        .key = &key,
+        .mode = ECB,
+    };
+    
+    byte plaintext[5] = {
+        0x48, 0x65, 0x6C, 0x6C, 0x6F
+    };
+    
+    byte expected_plaintext[16] = {
+        0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    };
+    
+    byte expected_ciphertext[16] = {
+        0x7f, 0xab, 0xba, 0xbe, 0x52, 0x96, 0x53, 0xfb, 0xba, 0xb5, 0x46, 0x11, 0x8b, 0xcd, 0xc8, 0xfc
+    };
+    
+    size_t content_bytes = 5;
+    size_t block_bytes = 16;
+    size_t padded_bytes = 0;
+    pkcs7_padded_content_bytes(block_bytes, content_bytes, &padded_bytes);
+    
+    size_t bytes_sum = content_bytes + padded_bytes;
+    byte *input = malloc(bytes_sum * sizeof(byte));
+    memcpy(input, plaintext, content_bytes * sizeof(byte));
+    
+    pkcs7_pad(padded_bytes, input, bytes_sum);
+    
+    size_t bytes_to_unpad = 0;
+    pkcs7_unpadded_content_bytes(input, bytes_sum, &bytes_to_unpad);
+    
+    printf("Padded Encryption Test:");
+    aes_256_encrypt(input, bytes_sum, config);
+    failed_tests += test_equality(expected_ciphertext, input, bytes_sum);
+    
+    printf("Padded Decryption Test:");
+    aes_256_decrypt(input, bytes_sum, config);
+    failed_tests += test_equality(expected_plaintext, input, bytes_to_unpad);
+    
+    free(input);
+    
+    return failed_tests;
+}
+
 static int test_equality(byte *expected, byte *actual, size_t size) {
     
     int test_failed = 0;
@@ -116,7 +170,7 @@ static int test_equality(byte *expected, byte *actual, size_t size) {
             printf("\n");
     }
     
-    printf("actual-----------------------------\n");
+    printf("\nactual-----------------------------\n");
     for (int i = 0; i < size; i++) {
         if ((i + 1) % 4 == 0)
             printf("%02" PRIx32 " ", actual[i]);

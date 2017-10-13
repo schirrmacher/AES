@@ -9,14 +9,19 @@ static void xor_blocks(const block first_block, const block second_block, block 
 
 void aes_256_encrypt(byte *plaintext, size_t plaintext_size, const struct aes_configuration config) {
     
-    block prev_result;
+    if (plaintext_size % AES_BLOCK_BYTES != 0) {
+        // error
+    }
     
-    for (int i = 0; i < plaintext_size / AES_BLOCK_BYTES; i++) {
+    const unsigned long blocks = plaintext_size / AES_BLOCK_BYTES;
+    
+    block prev_result;
+    for (int i = 0; i < blocks; i++) {
         
         block text_block;
-        block temp_result;
-        
         memcpy(text_block, plaintext + (i * AES_BLOCK_BYTES), sizeof(block));
+        
+        block temp_result;
         
         switch (config.mode) {
                 
