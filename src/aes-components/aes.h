@@ -3,12 +3,8 @@
 #define aes_h
 
 #include <stdio.h>
+#include "operation-modes.h"
 #include "aes-constants.h"
-
-enum operation_mode {
-    ECB,
-    CBC
-};
 
 struct aes_configuration {
     const key *key;
