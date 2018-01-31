@@ -1,5 +1,5 @@
-COMPILER = gcc
-COMPILER_FLAGS = -Wall -Wmissing-braces
+COMPILER = clang
+COMPILER_FLAGS = -Wall
 
 TARGET_NAME := aes
 TARGET_DIR := bin

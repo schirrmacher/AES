@@ -2,6 +2,7 @@
 #ifndef pkcs7_h
 #define pkcs7_h
 
+#include <stdint.h>
 #include <stdio.h>
 
 enum pkcs7_status {

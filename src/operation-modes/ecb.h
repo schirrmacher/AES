@@ -2,6 +2,7 @@
 #ifndef ecb_h
 #define ecb_h
 
+#include <stdint.h>
 #include <stdio.h>
 
 void ecb_encrypt(uint8_t *plaintext,

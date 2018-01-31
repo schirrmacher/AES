@@ -2,6 +2,7 @@
 #ifndef block_processing_h
 #define block_processing_h
 
+#include <stdint.h>
 #include <stdio.h>
 
 void process_blocks(uint8_t *all_blocks,

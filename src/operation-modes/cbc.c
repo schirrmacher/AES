@@ -1,6 +1,7 @@
 
 #include "cbc.h"
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include "block-processing.h"
 
@@ -16,18 +17,18 @@ void cbc_encrypt(uint8_t *plaintext,
                  const uint8_t *iv,
                  void (^encrypt)(uint8_t *block))
 {
-    
+
     process_blocks(plaintext, plaintext_bytes, block_bytes, ^(uint8_t *block, unsigned long index) {
-        
+
         if (index == 0)
             xor_blocks(block, iv, block_bytes, block);
         else {
             uint8_t *prev = plaintext + (block_bytes * (index - 1));
             xor_blocks(block, prev, block_bytes, block);
         }
-        
+
         encrypt(block);
-        
+
     });
 }
 
@@ -37,12 +38,12 @@ void cbc_decrypt(uint8_t *ciphertext,
                  const uint8_t *iv,
                  void (^decrypt)(uint8_t *block))
 {
-    
+
     uint8_t *prev_block = malloc(block_bytes * sizeof(uint8_t));
     uint8_t *temp = malloc(block_bytes * sizeof(uint8_t));
-    
+
     process_blocks(ciphertext, ciphertext_bytes, block_bytes, ^(uint8_t *block, unsigned long index) {
-        
+
         if (index == 0) {
             memcpy(prev_block, block, block_bytes * sizeof(uint8_t));
             decrypt(block);
@@ -53,9 +54,9 @@ void cbc_decrypt(uint8_t *ciphertext,
             xor_blocks(block, prev_block, block_bytes, block);
             memcpy(prev_block, temp, block_bytes * sizeof(uint8_t));
         }
-        
+
     });
-    
+
     free(prev_block);
     free(temp);
 }

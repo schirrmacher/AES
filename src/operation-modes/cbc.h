@@ -2,6 +2,7 @@
 #ifndef cbc_h
 #define cbc_h
 
+#include <stdint.h>
 #include <stdio.h>
 
 
